@@ -42,6 +42,9 @@ def step2():
 def step3():
     return render_template("step3.html", data=request.form)
 
+# =========================
+# 🚀 FIXED SUBMIT (ULTRA UI PAGE)
+# =========================
 @app.route("/submit", methods=["POST"])
 def submit():
     conn = sqlite3.connect("leads.db")
@@ -65,7 +68,75 @@ def submit():
     conn.commit()
     conn.close()
 
-    return "תודה! נחזור אליך בקרוב."
+    return """
+    <!DOCTYPE html>
+    <html lang="he">
+    <head>
+    <meta charset="UTF-8">
+    <title>תודה</title>
+
+    <style>
+        body{
+            margin:0;
+            font-family:Rubik, Arial;
+            background:linear-gradient(135deg,#0f172a,#111827);
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            direction:rtl;
+        }
+
+        .card{
+            text-align:center;
+            background:rgba(255,255,255,0.08);
+            padding:40px;
+            border-radius:20px;
+            border:1px solid rgba(255,255,255,0.1);
+            max-width:420px;
+        }
+
+        .check{
+            font-size:50px;
+            margin-bottom:10px;
+        }
+
+        h1{
+            margin:0 0 10px;
+            font-size:22px;
+        }
+
+        p{
+            color:#cbd5e1;
+            font-size:14px;
+            line-height:1.6;
+        }
+
+        .btn{
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 18px;
+            background:#10b981;
+            color:white;
+            text-decoration:none;
+            border-radius:10px;
+            font-weight:bold;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div class="card">
+            <div class="check">✅</div>
+            <h1>הפרטים נשלחו בהצלחה</h1>
+            <p>תודה! קיבלנו את הפנייה שלך.<br>נציג יחזור אליך בהקדם האפשרי.</p>
+
+            <a class="btn" href="/">חזרה לדף הבית</a>
+        </div>
+    </body>
+    </html>
+    """
 
 @app.route("/admin")
 def admin():
@@ -78,7 +149,7 @@ def admin():
     return render_template("admin.html", leads=leads)
 
 # =========================
-# 🔥 CLEAN GOOGLE SHEETS EXPORT (FIXED)
+# 🔥 CLEAN GOOGLE SHEETS EXPORT (UNCHANGED)
 # =========================
 @app.route("/export")
 def export():
@@ -97,7 +168,6 @@ def export():
         quoting=csv.QUOTE_MINIMAL
     )
 
-    # ✅ Clean professional headers
     writer.writerow([
         "ID",
         "Name",
@@ -112,7 +182,6 @@ def export():
         "Contact Method"
     ])
 
-    # ✅ Clean + normalize rows for Google Sheets stability
     for row in rows:
         cleaned = []
         for v in row:

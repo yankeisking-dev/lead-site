@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Response
 import sqlite3
 import csv
+import io
 
 app = Flask(__name__)
 
@@ -76,20 +77,49 @@ def admin():
 
     return render_template("admin.html", leads=leads)
 
+# =========================
+# ✅ FIXED EXPORT (READY)
+# =========================
 @app.route("/export")
 def export():
+
     conn = sqlite3.connect("leads.db")
     c = conn.cursor()
-    c.execute("SELECT * FROM leads")
+    c.execute("SELECT * FROM leads ORDER BY id DESC")
     rows = c.fetchall()
     conn.close()
 
-    with open("leads.csv", "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["ID","Name","Phone","Email","Age","Interest","Credit","Restrict","Property","Status","Contact"])
-        writer.writerows(rows)
+    output = io.StringIO()
+    writer = csv.writer(output, quoting=csv.QUOTE_ALL)
 
-    return "Export done"
+    # clean headers for Google Sheets
+    writer.writerow([
+        "ID",
+        "Name",
+        "Phone",
+        "Email",
+        "Age",
+        "Interest",
+        "Credit Card",
+        "Restrictions",
+        "Property",
+        "Status",
+        "Contact Method"
+    ])
+
+    # clean data rows
+    for row in rows:
+        writer.writerow([x if x is not None else "" for x in row])
+
+    output.seek(0)
+
+    return Response(
+        output,
+        mimetype="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=leads_google_sheets.csv"
+        }
+    )
 
 @app.route("/delete/<int:id>")
 def delete(id):

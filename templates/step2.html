@@ -21,11 +21,32 @@ body{
     border-radius:18px;
 }
 
+/* added for better UX */
+label{
+    display:block;
+    margin-top:12px;
+    margin-bottom:4px;
+    font-weight:600;
+    color:#111;
+}
+
 select,button{
     width:100%;
     padding:12px;
     margin:8px 0;
     border-radius:10px;
+    border:1px solid #ddd;
+    box-sizing:border-box;
+}
+
+button{
+    background:#0f172a;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
+button:hover{
+    opacity:0.9;
 }
 </style>
 </head>
@@ -44,25 +65,32 @@ select,button{
 <input type="hidden" name="age" value="{{ data.age }}">
 <input type="hidden" name="interest" value="{{ data.interest }}">
 
+<label>האם יש לך כרטיס אשראי?</label>
 <select name="credit_card">
-<option>כן</option><option>לא</option>
+    <option>כן</option>
+    <option>לא</option>
 </select>
 
+<label>האם קיימות הגבלות?</label>
 <select name="restrictions">
-<option>כן</option><option>לא</option>
+    <option>כן</option>
+    <option>לא</option>
 </select>
 
+<label>האם יש נכס בבעלותך?</label>
 <select name="property">
-<option>כן</option><option>לא</option>
+    <option>כן</option>
+    <option>לא</option>
 </select>
 
+<label>סטטוס אישי</label>
 <select name="status">
-<option>רווק</option>
-<option>נשוי</option>
-<option>גרוש</option>
+    <option>רווק</option>
+    <option>נשוי</option>
+    <option>גרוש</option>
 </select>
 
-<button>המשך</button>
+<button type="submit">המשך</button>
 
 </form>
 

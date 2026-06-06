@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<title>עריכת ליד</title>
+</head>
+
+<body style="font-family:Arial; padding:20px; direction:rtl;">
+
+<h2>עריכת ליד</h2>
+
+<form method="POST">
+
+<input name="name" value="{{ lead[1] }}"><br><br>
+<input name="phone" value="{{ lead[2] }}"><br><br>
+<input name="email" value="{{ lead[3] }}"><br><br>
+<input name="age" value="{{ lead[4] }}"><br><br>
+
+<select name="interest">
+    <option>חיילים משוחררים</option>
+    <option>כל מטרה</option>
+    <option>רכב</option>
+</select><br><br>
+
+<select name="credit_card">
+    <option>כן</option>
+    <option>לא</option>
+</select><br><br>
+
+<select name="restrictions">
+    <option>כן</option>
+    <option>לא</option>
+</select><br><br>
+
+<select name="property">
+    <option>כן</option>
+    <option>לא</option>
+</select><br><br>
+
+<select name="status">
+    <option>רווק</option>
+    <option>נשוי</option>
+    <option>גרוש</option>
+</select><br><br>
+
+<button type="submit">שמור</button>
+
+</form>
+
+</body>
+</html>

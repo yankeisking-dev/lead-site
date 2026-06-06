@@ -78,7 +78,7 @@ def admin():
     return render_template("admin.html", leads=leads)
 
 # =========================
-# ✅ FIXED EXPORT (READY)
+# 🔥 CLEAN GOOGLE SHEETS EXPORT (FIXED)
 # =========================
 @app.route("/export")
 def export():
@@ -90,9 +90,14 @@ def export():
     conn.close()
 
     output = io.StringIO()
-    writer = csv.writer(output, quoting=csv.QUOTE_ALL)
 
-    # clean headers for Google Sheets
+    writer = csv.writer(
+        output,
+        delimiter=",",
+        quoting=csv.QUOTE_MINIMAL
+    )
+
+    # ✅ Clean professional headers
     writer.writerow([
         "ID",
         "Name",
@@ -107,17 +112,23 @@ def export():
         "Contact Method"
     ])
 
-    # clean data rows
+    # ✅ Clean + normalize rows for Google Sheets stability
     for row in rows:
-        writer.writerow([x if x is not None else "" for x in row])
+        cleaned = []
+        for v in row:
+            if v is None:
+                cleaned.append("")
+            else:
+                cleaned.append(str(v).replace("\n", " ").replace("\r", " ").strip())
+        writer.writerow(cleaned)
 
     output.seek(0)
 
     return Response(
-        output,
+        output.getvalue().encode("utf-8-sig"),
         mimetype="text/csv",
         headers={
-            "Content-Disposition": "attachment; filename=leads_google_sheets.csv"
+            "Content-Disposition": "attachment; filename=CRM_GOOGLE_SHEETS_CLEAN.csv"
         }
     )
 

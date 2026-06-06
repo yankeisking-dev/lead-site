@@ -4,65 +4,151 @@
 <meta charset="UTF-8">
 <title>שלב 3</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 body{
+    margin:0;
     font-family:Rubik;
-    background:linear-gradient(135deg,#0f172a,#111827);
+    background: radial-gradient(circle at top, #1e293b, #0b1220);
     color:white;
     direction:rtl;
 }
 
+/* CENTER WRAPPER */
+.wrapper{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+/* CARD */
 .card{
-    max-width:500px;
-    margin:70px auto;
-    background:white;
-    color:#111;
-    padding:30px;
-    border-radius:18px;
-}
-
-select,button{
     width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:10px;
+    max-width:520px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 25px 80px rgba(0,0,0,0.6);
 }
 
-button{
-    background:#10b981;
-    color:white;
-    border:none;
-    font-weight:600;
+/* TITLE */
+h2{
+    margin:0 0 10px;
+    font-size:22px;
+    font-weight:700;
 }
+
+.subtitle{
+    font-size:13px;
+    color:#cbd5e1;
+    margin-bottom:25px;
+    line-height:1.5;
+}
+
+/* FORM ELEMENTS */
+select{
+    width:100%;
+    padding:14px;
+    margin:12px 0;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.15);
+    background:#0f172a;
+    color:white;
+    font-size:14px;
+    outline:none;
+}
+
+select:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#10b981,#059669);
+    color:white;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 10px 25px rgba(16,185,129,0.3);
+}
+
+/* TRUST LINE */
+.trust{
+    margin-top:15px;
+    font-size:12px;
+    color:#94a3b8;
+    text-align:center;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:10px;
+    padding:6px 10px;
+    border-radius:20px;
+    background:rgba(16,185,129,0.15);
+    color:#34d399;
+    font-size:11px;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="wrapper">
 
-<h2>איך תרצה שניצור איתך קשר?</h2>
+    <div class="card">
 
-<form method="POST" action="/submit">
+        <div class="badge">🔒 טופס מאובטח ומוצפן</div>
 
-<input type="hidden" name="name" value="{{ data.name }}">
-<input type="hidden" name="phone" value="{{ data.phone }}">
-<input type="hidden" name="email" value="{{ data.email }}">
-<input type="hidden" name="age" value="{{ data.age }}">
-<input type="hidden" name="interest" value="{{ data.interest }}">
-<input type="hidden" name="credit_card" value="{{ data.credit_card }}">
-<input type="hidden" name="restrictions" value="{{ data.restrictions }}">
-<input type="hidden" name="property" value="{{ data.property }}">
-<input type="hidden" name="status" value="{{ data.status }}">
+        <h2>איך תרצה שניצור איתך קשר?</h2>
+        <div class="subtitle">
+            בחר את הדרך הנוחה ביותר עבורך — נציג יחזור אליך בהקדם עם הצעה מותאמת אישית.
+        </div>
 
-<select name="contact_method">
-<option value="email">אימייל</option>
-<option value="phone">טלפון</option>
-</select>
+        <form method="POST" action="/submit">
 
-<button>סיום ושליחה</button>
+            <input type="hidden" name="name" value="{{ data.name }}">
+            <input type="hidden" name="phone" value="{{ data.phone }}">
+            <input type="hidden" name="email" value="{{ data.email }}">
+            <input type="hidden" name="age" value="{{ data.age }}">
+            <input type="hidden" name="interest" value="{{ data.interest }}">
+            <input type="hidden" name="credit_card" value="{{ data.credit_card }}">
+            <input type="hidden" name="restrictions" value="{{ data.restrictions }}">
+            <input type="hidden" name="property" value="{{ data.property }}">
+            <input type="hidden" name="status" value="{{ data.status }}">
 
-</form>
+            <select name="contact_method" required>
+                <option value="phone">📞 טלפון - שיחה ישירה</option>
+                <option value="email">📧 אימייל - פירוט מלא</option>
+            </select>
+
+            <button type="submit">סיום ושליחה</button>
+
+        </form>
+
+        <div class="trust">
+            בדרך כלל חוזרים תוך פחות מ-10 דקות בשעות פעילות
+        </div>
+
+    </div>
 
 </div>
 
